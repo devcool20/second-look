@@ -1,0 +1,157 @@
+1. Why I chose Scenario C
+=========================
+
+From what I can understand scenario C mostly consists of this: this is a business problem where used phones, laptops, and tablets are bought and sold. The main issue is that this business inspects those devices, repairs some of them, and then resells them. That's the whole business idea.
+The PRD explicitly says:
+
+1. Employees don't inspect devices consistently.
+2. The business sometimes discovers faults after purchasing. That's a big issue. There's no way that this can be identified.
+3. From the customer's POV the customers don't understand why similar devices have different prices. For example there's a Samsung S24 and both of these S24s have different pricing because one of them may have scratches, screen issues, button enablement issues, or other issues like battery issues too. That is one of the reasons.
+4. The owner wants the business to grow without personally inspecting everything that comes across him.
+
+Also there is some business scale given: approximately 25 to 40 incoming devices per day, 200 to 250 devices stay in inventory consistently, and around 10 to 15 returns a week. There are 4 inspection employees and 2 technicians.
+
+2. The realistic goal
+=====================
+
+"One important finding is that the goal cannot be solely to identify every fault in the devices before purchase because that's not possible. Also the PRD explicitly says that some faults may appear only after extended use. I think, from my understanding, the realistic goal should be to make inspections more consistent: record what is known to the employee and what is unknown. Those two things should be separate. We have to make purchase decisions easier to explain." 
+
+3. The user, problem and proposed improvement
+=============================================
+
+few points:
+
+1. A primary chosen user should be the employee who inspects a used device before the business buys it.
+2. Our selected problem is that inspection evidence and purchase reasoning vary between employees. It differs from employee to employee, making decisions harder to trust and delegate. That is the problem we are solving.
+3. Our proposed improvement is to guide an employee through a consistent inspection. We have to make all the uncertainties visible that we are not sure of and show how evidence and estimated costs affect a purchase recommendation. We also have to save the human decision with its reasoning because we can't be just unsure about things.
+
+All in all this doesn't solve every issue in the business but it focuses on the inspection and buying decision, which we are trying to document through this prototype.
+
+4. What consistent evidence means
+=================================
+
+Coming on to what consistent evidence means.
+Consistent evidence means that this prototype asks the employee to enter device details and record inspection results as three options:
+
+1. Pass
+2. Issue
+3. Unable to verify
+
+The employee can also add notes for issues or things which they are uncertain about, maybe checks. The missing responses are not treated as if they are passed or they pass but the app recommends holding a device when important evidence is missing or if there is a damodifying concern.
+The intended benefit from all this and this prototype is that the record shows:
+
+1. What the employee checked
+2. What the employee observed during all these checks
+3. What the employee could not verify during all these checks
+4. Why the app's demo rules suggest hold or decline
+
+All this is meant to support a more consistent record. That is the whole thing we are trying to do here.
+
+5. Seller claims versus employee observations
+=============================================
+
+So now comes what the seller claims versus what the employee observes. These are two main important things in this whole prototype.
+Right now the prototype includes a seller reporter history also on the device detail step. The employee writes what the seller said about the device and what the intuition said there. Also in the inspections tab, the employee records their own observations separately from what the seller said. All this handles the information source differently in the report:
+
+1. Seller-reported information is a claim.
+2. Employee-entered inspection results are observations.
+
+The seller does not enter information directly and the prototype cannot determine whether a seller's claim is true. That is one ambiguity we are still in.
+There's one more notable thing which we should consider: the interface we are using should make this distinction very real so that an employee doesn't accidentally treat a seller statement as verified evidence (because that could cause issues in the future).
+
+6. Purchase price calculation
+=============================
+
+So now comes the purchase price calculation. The price assessment in this prototype is manually done or manually entered. The formula looks like maximum purchase price, which is MPP = expected resale price - the repair cost - the other selling costs - the target profit - the risk reserve in case of some mishappening.
+
+For example for this formula, let's say there is an unexpected resale price for a phone, which is ₹23,000. The phone is perfectly fine with some minor scratches. The repair cost is zero (no repairing needed). Other selling costs are around ₹500. The target profit that we need to get or extract from this whole deal is 3,000. The risk reserve here is 1,000 so the calculated MPP comes around ₹18,500. 
+
+Now in the case of a price exceeding this MPP (for example, if the seller is asking for something that exceeds this MPP price), in that case the app recommends declining at that price. That is something very common or basic.
+
+If a critical issue or missing information blocks the assessment, it will recommend the hold option. If the evidence is complete and the asking price and everything fit, it will say "buy candidate." A human is still making the final decision in this whole loop. 
+
+7. What I have built
+====================
+
+Now the next part is explaining what what I've built until now. So right now, this working prototype includes:
+
+1. an inspection queue that has around six to seven fictional sample records. One is manually entered by myself.
+
+2. a Inspection flow for smartphones.
+
+3. device details, which includes a fictional internal reference demo dash.
+
+4. inspection checks. With pass issue and unable to verify responses.
+
+5. optional seller reported history, which is very important in this prototype, which is also separate from what the employee observes.
+
+6. cosmetic condition choices and some notes on it.
+
+7. battery reading and plus a serious battery concern flag in case the employee records a battery issue which needs to be looked upon at.
+
+8. there's also a financial assessment with a calculated MPP which I just told above this.
+
+9. buy, hold and decline decisions all comes with a reason. So that there is a clear indication on what the status right now is.
+
+10. there are saved evidence snapshots for taking the final decisions.
+
+11. local browser storage, so that everything remains after refresh on the same browser (this is for this prototype only). This is a decision which was optimal, most optimal for this, so that is why I did this.
+
+12. handling for storage failures and corrupts data.
+
+13. there is also a timer that reminds the employee of the 15-minute scenario constraint.
+
+14. I wanted the UI/UX to be really colorful and something which looks aesthetically and visually pleasing and which is not even something very overly done. That is why I chose this and I've kept it really really simple, nothing much. Improvements can be done but this would just go with the actual usage also. If this has to be used in a real environment, this could be used there also. It checks all the boxes visually also.
+
+8. How the project works
+========================
+
+This project uses React, TypeScript, and Vue. The interface, the decision rules, and browser storage are separate parts. The screen displays the input while the rules calculate the recommendation. That was the whole thing I was trying to do. 
+
+9. What the prototype demonstrates
+==================================
+
+Now what the prototype does and what it does not demonstrate.
+What it demonstrates:
+
+- An employee can create and save a fictional inspection record.
+- Inspection checks can have explicit results and notes.
+- The demo rules can make missing or concerning evidence affect the recommendation.
+- Financial assumptions can be combined into a visible purchase price.
+- A human decision can be saved with the evidence and all the reasoning behind it.
+
+10. What the prototype does not demonstrate
+===========================================
+
+Now what it does not demonstrate:
+
+1. That employees will inspect devices consistently in real life, which is not the case.
+2. That the checklist reflects the actual shop's process.
+3. That an inspection takes 15 minutes. The timer alone does not establish that.
+4. That the purchase formula is working or improves profit. It's not something that is being confirmed or looked upon to.
+5. That all faults will be found.
+6. That this tool reduces returns or losses.
+7. That multiple employees can share records between them.
+
+11. What testing revealed about the flow
+========================================
+
+One important thing I fixed in this prototype while testing it: the problem was that when I was testing with our custom Samsung inspection, it showed "held" and the queue said that other selling costs need a valid amount. That exposed a really weak point that was related to the user experience.
+
+Now what it was: the message sounds like a technical validation error. It does not clearly distinguish an incomplete price assessment from an inspection concern. It can make the user think that the device itself failed inspection. The prototype needed to say what to do, such as enter an estimate or enter zero if there are no other costs. The broader product issue was that inspection evidence and financial completeness are currently combined into one whole "held" status. 
+
+12. Corrections during implementation
+=====================================
+
+This note is for what we corrected during implementation. During building and reviewing things, some checks exposed some issues:
+
+1. Select controls were not labeled clearly for the Browser user.
+2. Saving a health inspection multiple times exposed a snapshot validation bug that was corrected afterwards by me.
+3. A blocked purchase initially focused only on the price instead of the first incomplete input. In that way a full guided inspection can be followed later on.
+4. The queue initially showed only technical validation warnings. This remains something I need to improve. If I improve it I'll just document it here.
+
+Also the production build found an empty CSS import so that was a really small issue.
+These all are genuine implementation corrections done by me.
+
+
+

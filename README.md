@@ -1,0 +1,17 @@
+# SwaVid - Evidence before purchase
+
+**Scenario selected:** C, the second-hand electronics business. This prototype focuses on smartphones.
+
+**Problem:** Inspection evidence and purchase reasoning vary from employee to employee, making decisions harder to trust and delegate. The goal is not to find every hidden fault; it is to record what is known, keep what is unknown separate, and make purchase decisions easier to explain.
+
+**Primary user:** The employee inspecting a used phone before the business buys it. The prototype supports their decision; it does not replace their judgment.
+
+**How it works:** Start a new inspection from the queue, enter device details and any seller-reported history, then record employee observations as **Pass, Issue or Unable to verify**. Seller claims stay visibly separate from inspection evidence. Add dated resale and cost estimates; the app calculates a maximum purchase price: **resale - repairs - selling costs - target profit - risk reserve**. Missing evidence or unknown costs produce **Hold**, with the issue, next action and a link to the relevant step. Complete evidence and an affordable asking price produce **Buy candidate**; an asking price above the ceiling produces **Decline at current price**. A human records Buy, Hold or Decline with a reason; buying requires a positive agreed price within the ceiling. Held records can be resumed. Final decisions retain read-only evidence and price snapshots after refresh. Record status, inspection coverage and price readiness are shown separately. A timer reminds the employee of the 15-minute target.
+
+**Assumptions:** Devices, staff labels, observations and prices are fictional. Checks and repair estimates are entered manually. The seven-day resale-price window, purchase formula and hold rules are labelled demo policy. Selling costs can be a labelled estimate or explicitly unknown; unknown never means zero. A quick check cannot guarantee hidden faults, battery longevity or warranty coverage. This is a single-browser demo, not a validated shop workflow.
+
+**What I left out and why:** Laptops/tablets, inventory and sales management, customer reports, live market prices, hardware diagnostics and theft verification are outside this one buying flow. No real seller personal information or device identifiers are collected. Shared employee records and authentication are excluded to keep the prototype small; browser storage preserves local records only. No paid services or runtime AI API are required.
+
+**Run or view:** With Node.js 24, run `npm ci`, then `npm run dev`; open the local address printed in the terminal. Built with React, TypeScript and Vite. Run `npm run build`, `npm test`, `npm run test:e2e` (Chrome installed) and `npm run lint` for checks. The [walkthrough](docs/verification.md) explains the demonstration; [my working note](docs/note.txt) records the thinking behind it.
+
+**With five additional hours:** Spend **1 hour** walking through a fictional intake with a person and timing the physical checks plus data entry; **2 hours** adding a technician-estimate follow-up record (quote source, date, repair cost and turnaround) so held devices have traceable evidence when resumed; **1 hour** refining screen density, visual hierarchy, button feedback and error states from that walkthrough; and **1 hour** checking the revised flow. The main addition would help close the gap between "Get a technician estimate" and a supported buying decision, rather than add more screens for appearance alone.
