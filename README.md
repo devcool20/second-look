@@ -1,4 +1,4 @@
-# SwaVid - Evidence before purchase
+# Second Look - Evidence before purchase
 
 **Scenario selected:** C, the second-hand electronics business. This prototype focuses on smartphones.
 
